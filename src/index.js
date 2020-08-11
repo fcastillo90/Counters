@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { EchoLoader } from './components/loader';
+import theme from './utils/palette';
 
 // You don't have to use `fetch` btw, use whatever you want
 const getCounters = () =>
@@ -13,8 +15,11 @@ const App = () => {
 
   return (
     <>
-      <h1>Hello, Cornershop!</h1>
-      <EchoLoader />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <h1>Hello, Cornershop!</h1>
+        <EchoLoader />
+      </ThemeProvider>
     </>
   );
 };
