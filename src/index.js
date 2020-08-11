@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import { EchoLoader } from './components/loader';
+import { EchoLoader } from './components/Loader';
 import theme from './utils/palette';
+import { Logo } from './components/Icon';
 
 // You don't have to use `fetch` btw, use whatever you want
 const getCounters = () =>
@@ -19,6 +20,7 @@ const App = () => {
         <CssBaseline />
         <h1>Hello, Cornershop!</h1>
         <EchoLoader />
+        <Logo style={{ fontSize: 114 }} />
       </ThemeProvider>
     </>
   );
