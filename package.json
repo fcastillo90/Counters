@@ -9,14 +9,21 @@
   "author": "Cornershop",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "axios": "^0.19.2",
     "body-parser": "^1.16.1",
+    "build-url": "^2.0.0",
+    "clsx": "^1.1.1",
     "concurrently": "^5.1.0",
     "cors": "^2.8.5",
     "express": "^4.14.1",
     "lodash": "^4.17.4",
     "morgan": "^1.8.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1"
   },
   "proxy": "http://localhost:3001",
@@ -31,5 +38,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "^10.4.8",
+    "jest": "^26.3.0"
   }
 }
