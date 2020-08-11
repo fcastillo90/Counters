@@ -3,9 +3,9 @@ module.exports = {
     browser: true,
     es2020: true,
   },
-  extends: [
-    'plugin:prettier/recommended',
-    'airbnb',
+  extends: [ 
+    'airbnb', 
+    'plugin:prettier/recommended' 
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -18,5 +18,9 @@ module.exports = {
     'react',
   ],
   rules: {
-  },
+    'react/jsx-filename-extension': [
+      1, 
+      {extensions: ['.js', '.jsx']}
+    ]
+  }
 };
