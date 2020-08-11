@@ -1,4 +1,4 @@
-import buildUrl from 'build-url'
+import buildUrl from 'build-url';
 
 export default {
   urls: {
@@ -17,7 +17,7 @@ export default {
     queryParams = null,
     hash = null,
     lowerCase = false,
-    disableCSV = false,
+    disableCSV = false
   ) =>
     buildUrl(url, {
       path,
@@ -26,4 +26,4 @@ export default {
       disableCSV,
       queryParams,
     }),
-}
+};
