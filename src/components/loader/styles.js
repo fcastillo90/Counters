@@ -2,17 +2,16 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const getSize = (size) => (typeof size === 'number' ? `${size}px` : size);
 
-const styles = ({ size, color, verticalAlign }) =>
-  makeStyles({
+const styles = ({ size }) =>
+  makeStyles((theme) => ({
     '@keyframes animation': {
       from: {
-        transform: 'scale(0.1)',
-      },
-      '50%': {
-        transform: 'scale(1.0)',
+        transform: 'scale(0.2)',
+        opacity: 1,
       },
       to: {
-        transform: 'scale(0.1)',
+        transform: 'scale(1.0)',
+        opacity: 0,
       },
     },
     wrapper: {
@@ -22,32 +21,40 @@ const styles = ({ size, color, verticalAlign }) =>
       border: '0px solid transparent',
     },
     firstBall: {
-      backgroundColor: color,
+      backgroundColor: theme.palette.primary.main,
       width: getSize(size),
       height: getSize(size),
       borderRadius: '100%',
-      opacity: 0.6,
       position: 'absolute',
       top: 0,
       left: 0,
-      verticalAlign: getSize(verticalAlign),
-      animation: `$animation 2s 1s infinite ease-in-out`,
+      animation: `$animation 2s 0s infinite ease-out`,
       'animation-fill-mode': 'both',
       border: '0px solid transparent',
     },
     secondBall: {
-      backgroundColor: color,
+      backgroundColor: theme.palette.primary.main,
       width: getSize(size),
       height: getSize(size),
       borderRadius: '100%',
-      opacity: 0.6,
       position: 'absolute',
       top: 0,
       left: 0,
-      verticalAlign: getSize(verticalAlign),
-      animation: `$animation 2s 0s infinite ease-in-out`,
+      animation: `$animation 2s 0.5s infinite ease-out`,
       'animation-fill-mode': 'both',
       border: '0px solid transparent',
     },
-  });
+    thirdBall: {
+      backgroundColor: theme.palette.primary.main,
+      width: getSize(size),
+      height: getSize(size),
+      borderRadius: '100%',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      animation: `$animation 2s 1s infinite ease-out`,
+      'animation-fill-mode': 'both',
+      border: '0px solid transparent',
+    },
+  }));
 export default styles;
