@@ -24,7 +24,10 @@ const styles = makeStyles((theme) => ({
   },
   mainBox: {
     height: 53,
-    margin: '10px 7px',
+    margin: 10,
+    padding: 0,
+  },
+  typoBox: {
     padding: '16px 0px 14px 14px',
   },
   mainBoxActive: {

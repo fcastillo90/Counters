@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import styles from './styles';
 
 const Picker = (props) => {
-  const { label, number, color, active } = props;
+  const { label, number, color, active, onSelect, onRemove, onAdd } = props;
   const classes = styles();
   return (
     <Box
@@ -17,10 +17,11 @@ const Picker = (props) => {
       alignItems="center"
       className={clsx(classes.mainBox, { [classes.mainBoxActive]: active })}
     >
-      <Typography variant="body1" className={classes.labelStyle}>
-        {label}
-      </Typography>
-
+      <Box className={classes.typoBox} onClick={onSelect} flexGrow={1}>
+        <Typography variant="body1" className={classes.labelStyle}>
+          {label}
+        </Typography>
+      </Box>
       <Box
         className={classes.innerBox}
         display="flex"
@@ -28,6 +29,7 @@ const Picker = (props) => {
         alignItems="center"
       >
         <IconButton
+          onClick={onRemove}
           className={clsx(classes.symbols, {
             [classes.symbolsPrimary]: color === 'primary',
             [classes.symbolsSecondary]: color === 'secondary',
@@ -40,6 +42,7 @@ const Picker = (props) => {
           {number}
         </Typography>
         <IconButton
+          onClick={onAdd}
           className={clsx(classes.symbols, {
             [classes.symbolsPrimary]: color === 'primary',
             [classes.symbolsSecondary]: color === 'secondary',
@@ -60,8 +63,12 @@ Picker.propTypes = {
   number: PropTypes.number.isRequired,
   color: PropTypes.oneOf(['primary', 'secondary']),
   active: PropTypes.bool,
+  onSelect: PropTypes.func,
+  onRemove: PropTypes.func.isRequired,
+  onAdd: PropTypes.func.isRequired,
 };
 Picker.defaultProps = {
   color: 'primary',
   active: false,
+  onSelect: () => {},
 };
