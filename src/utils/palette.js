@@ -35,23 +35,27 @@ export default createMuiTheme({
     MuiCssBaseline: {
       '@global': {
         '@font-face': [avenirNext],
+        height: '100vh',
       },
     },
     MuiButton: {
       root: {
         textTransform: 'unset',
         borderRadius: 8,
-        padding: '8px 24px',
+        padding: '4.5px 24px',
         fontWeight: 600,
       },
       contained: {
         backgroundColor: '#FBFBFB',
         border: '1px solid rgba(0, 0, 0, 0.1)',
       },
+      containedSizeSmall: {
+        padding: '5px 10px',
+        minWidth: 70,
+      },
     },
     MuiInputBase: {
       input: {
-        boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.05)',
         color: '#888B90',
         height: 32,
         paddingTop: 9,
@@ -88,6 +92,11 @@ export default createMuiTheme({
       },
     },
     MuiPaper: { rounded: { borderRadius: 10 } },
+    MuiDialog: {
+      paper: {
+        margin: 51,
+      },
+    },
     MuiDialogActions: {
       root: { justifyContent: 'center', padding: '20px 0px' },
       spacing: {

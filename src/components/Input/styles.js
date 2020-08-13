@@ -12,6 +12,8 @@ const styles = makeStyles(() => ({
   },
   textField: {
     margin: 0,
+    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.05)',
+    border: '1px solid rgba(0, 0, 0, 0.02)',
     '& .MuiInputBase-input': {
       height: 32,
       paddingTop: 9,

@@ -42,16 +42,15 @@ const Dialog = (props) => {
         <Button onClick={firstButtonAction} variant="contained" color="primary">
           {firstButtonLabel}
         </Button>
-        {typeof secondButtonLabel !== 'boolean' &&
-          typeof secondButtonAction !== 'boolean' && (
-            <Button
-              onClick={secondButtonAction}
-              variant="contained"
-              color="default"
-            >
-              {secondButtonLabel}
-            </Button>
-          )}
+        {secondButtonLabel !== '' && (
+          <Button
+            onClick={secondButtonAction}
+            variant="contained"
+            color="default"
+          >
+            {secondButtonLabel}
+          </Button>
+        )}
       </DialogActions>
     </MuiDialog>
   );
@@ -70,6 +69,6 @@ Dialog.propTypes = {
   secondButtonAction: PropTypes.func,
 };
 Dialog.defaultProps = {
-  secondButtonAction: false,
-  secondButtonLabel: false,
+  secondButtonAction: () => {},
+  secondButtonLabel: '',
 };
