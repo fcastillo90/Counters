@@ -23,8 +23,8 @@ const CounterList = () => {
           flexGrow={1}
         /> */}
         <PageLoader />
-        <BottomAppBar onAdd={() => {}} />
       </Container>
+      <BottomAppBar onAdd={() => {}} />
     </>
   );
 };
