@@ -41,6 +41,8 @@ export default createMuiTheme({
       root: {
         textTransform: 'unset',
         borderRadius: 8,
+        padding: '8px 24px',
+        fontWeight: 600,
       },
       contained: {
         backgroundColor: '#FBFBFB',
@@ -62,7 +64,7 @@ export default createMuiTheme({
         '&:hover $notchedOutline': {
           borderColor: 'transparent',
           boxShadow:
-            '0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)',
+            '0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
         },
       },
       notchedOutline: {
@@ -74,6 +76,24 @@ export default createMuiTheme({
       root: {
         borderColor: 'rgba(0, 0, 0, 0.02)',
         borderWidth: 10,
+      },
+    },
+    MuiChip: {
+      root: {
+        height: 40,
+        borderRadius: 99,
+      },
+      label: {
+        padding: '8px 18px',
+      },
+    },
+    MuiPaper: { rounded: { borderRadius: 10 } },
+    MuiDialogActions: {
+      root: { justifyContent: 'center', padding: '20px 0px' },
+      spacing: {
+        '& > :not(:first-child)': {
+          marginLeft: 10,
+        },
       },
     },
   },

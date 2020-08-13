@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputAdornment, TextField, Button } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { TextField } from '@material-ui/core';
 import styles from './styles';
 
-const SearchInput = (props) => {
+const Input = (props) => {
   const { placeholder, onFocus, value, setValue } = props;
   const classes = styles();
   const handleChangeValue = (e) => {
@@ -12,9 +11,6 @@ const SearchInput = (props) => {
   };
   const handleFocus = (e) => {
     onFocus(e);
-  };
-  const handleCancel = () => {
-    setValue('');
   };
   return (
     <div className={classes.root}>
@@ -27,38 +23,20 @@ const SearchInput = (props) => {
         onFocus={handleFocus}
         variant="outlined"
         onChange={handleChangeValue}
-        InputProps={{
-          startAdornment: (
-            <>
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            </>
-          ),
-        }}
       />
-      {!!value && (
-        <Button
-          onClick={handleCancel}
-          variant="contained"
-          className={classes.button}
-        >
-          Cancel
-        </Button>
-      )}
     </div>
   );
 };
 
-export default SearchInput;
+export default Input;
 
-SearchInput.propTypes = {
+Input.propTypes = {
   placeholder: PropTypes.string,
   onFocus: PropTypes.func,
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
 };
-SearchInput.defaultProps = {
+Input.defaultProps = {
   placeholder: '',
   onFocus: () => {},
 };

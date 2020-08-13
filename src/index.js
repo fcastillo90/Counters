@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
+import { ThemeProvider, CssBaseline, Button, Chip } from '@material-ui/core';
 import { EchoLoader } from './components/Loader';
 import theme from './utils/palette';
 import { Logo } from './components/Icon';
 import { Picker } from './components/Picker';
-import { SearchInput } from './components/Input';
+import { SearchInput, Input } from './components/Input';
+import { Dialog } from './components/Dialog';
 
 // You don't have to use `fetch` btw, use whatever you want
 const getCounters = () =>
@@ -38,6 +39,28 @@ const App = () => {
           placeholder="Search Counters"
           value={input}
           setValue={setInput}
+        />
+        <Input
+          placeholder="Search Counters"
+          value={input}
+          setValue={setInput}
+        />
+        <Button variant="contained" color="primary">
+          Action
+        </Button>
+        <Button variant="contained" color="default">
+          Action
+        </Button>
+        <Chip label="Cups of coffee" />
+        <Dialog
+          open
+          handleClose={() => {}}
+          title="Alert title"
+          message="Alert message"
+          firstButtonLabel="Action"
+          firstButtonAction={() => {}}
+          // secondButtonLabel={}
+          // secondButtonAction={}
         />
       </ThemeProvider>
     </>
