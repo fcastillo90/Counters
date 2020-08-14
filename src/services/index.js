@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getFromApi = async ({
+export const getFromApi = ({
   url = null,
   onSuccess = null,
   onError = () => {},
@@ -38,7 +38,7 @@ export const getFromApi = async ({
       })
     );
 };
-export const postToApi = async ({
+export const postToApi = ({
   body = {},
   url = null,
   onSuccess = null,

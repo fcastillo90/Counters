@@ -13,10 +13,10 @@ const Input = (props) => {
     onFocus(e);
   };
   return (
-    <div className={classes.root}>
+    <div className={classes.commomRoot}>
       <TextField
         fullWidth
-        className={classes.textField}
+        className={classes.commomInput}
         placeholder={placeholder}
         value={value}
         margin="normal"

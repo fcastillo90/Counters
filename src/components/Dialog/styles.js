@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const styles = makeStyles(() => ({
+export const styles = makeStyles(() => ({
   dialogTitle: {
     padding: '19px 27px 6px 27px',
     textAlign: 'center',
@@ -17,4 +17,40 @@ const styles = makeStyles(() => ({
     marginBottom: 0,
   },
 }));
-export default styles;
+
+export const createDialogStyle = makeStyles(() => ({
+  appBar: {
+    position: 'relative',
+  },
+  title: {
+    flex: 1,
+    fontWeight: 600,
+    fontSize: 22,
+    lineHeight: '30px',
+  },
+  dialogRoot: {
+    top: '15px !important',
+    '& .MuiPaper-root': {
+      borderRadius: '16px 16px 0px 0px',
+    },
+  },
+  closeIcon: {
+    color: '#C4C4C4',
+    fontSize: 28,
+  },
+  inputTitle: {
+    fontWeight: 500,
+    fontSize: 17,
+    lineHeight: '23px',
+    color: '#000',
+  },
+  inputCaption: {
+    fontWeight: 'normal',
+    fontSize: 15,
+    lineHeight: '20px',
+    color: '#888B90',
+  },
+  inputContainer: {
+    marginTop: 21,
+  },
+}));

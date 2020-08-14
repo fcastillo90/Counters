@@ -44,10 +44,16 @@ export default createMuiTheme({
         borderRadius: 8,
         padding: '4.5px 24px',
         fontWeight: 600,
+        fontSize: 17,
       },
       contained: {
         backgroundColor: '#FBFBFB',
         border: '1px solid rgba(0, 0, 0, 0.1)',
+        '&.Mui-disabled': {
+          backgroundColor: '#FF9500',
+          color: '#FFF',
+          opacity: 0.5,
+        },
       },
       containedSizeSmall: {
         padding: '5px 10px',

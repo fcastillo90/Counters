@@ -5,7 +5,7 @@ import theme from './utils/palette';
 import { Logo } from './components/Icon';
 import { Picker } from './components/Picker';
 import { SearchInput, Input } from './components/Input';
-import { Dialog } from './components/Dialog';
+import { MessageDialog } from './components/Dialog';
 
 // You don't have to use `fetch` btw, use whatever you want
 const getCounters = () =>
@@ -51,7 +51,7 @@ const App = () => {
           Action
         </Button>
         <Chip label="Cups of coffee" />
-        <Dialog
+        <MessageDialog
           open
           handleClose={() => {}}
           title="Alert title"

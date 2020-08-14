@@ -35,6 +35,7 @@ const Picker = (props) => {
             [classes.symbolsSecondary]: color === 'secondary',
           })}
           aria-label="Remove"
+          disabled={number === 0}
         >
           <RemoveIcon />
         </IconButton>

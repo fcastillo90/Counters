@@ -16,5 +16,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/jsx-props-no-spreading': 'off',
     'import/prefer-default-export': 'off',
+    "jsx-a11y/anchor-is-valid": 0,
+    'react/jsx-one-expression-per-line': 'off'
   },
 };

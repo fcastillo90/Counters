@@ -23,5 +23,21 @@ const styles = makeStyles(() => ({
       color: '#888B90',
     },
   },
+  commomRoot: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '9px 0',
+  },
+  commomInput: {
+    border: '1px solid rgba(0, 0, 0, 0.15)',
+    boxShadow: 'inset 0px 4px 8px rgba(0, 0, 0, 0.05)',
+    borderRadius: 8,
+    margin: 0,
+    '& .MuiInputBase-input': {
+      height: 32,
+      paddingTop: 6,
+      paddingBottom: 6,
+    },
+  },
 }));
 export default styles;

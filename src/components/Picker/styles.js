@@ -1,9 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const styles = makeStyles((theme) => ({
-  symbols: {
-    margin: 7,
-  },
+  symbols: {},
   symbolsPrimary: {
     color: theme.palette.primary.main,
   },
@@ -17,18 +15,19 @@ const styles = makeStyles((theme) => ({
     letterSpacing: '0.02em',
   },
   numberStyle: {
-    fontSize: 17,
-    fontWeight: 'normal',
+    fontSize: 20,
+    fontWeight: 600,
     lineHeight: 'normal',
     letterSpacing: '0.02em',
   },
   mainBox: {
     height: 53,
-    margin: 10,
+    margin: 0,
     padding: 0,
   },
   typoBox: {
-    padding: '16px 0px 14px 14px',
+    padding: '22px 0px',
+    marginLeft: 24,
   },
   mainBoxActive: {
     background: `${theme.palette.primary.main}33`,

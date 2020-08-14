@@ -47,4 +47,44 @@ export const footerAppBarStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
 }));
+export const listStyles = makeStyles((theme) => ({
+  '@keyframes spin': {
+    '100%': {
+      transform: 'rotate(360deg)',
+    },
+  },
+  typoItems: {
+    fontWeight: 600,
+    color: '#4a4a4a',
+    fontSize: 17,
+    lineHeight: '23px',
+    letterSpacing: '0.02em',
+    margin: '26px 7px 0px 25px',
+  },
+  typoTimes: {
+    fontWeight: 500,
+    color: '#888B90',
+    fontSize: 17,
+    lineHeight: '23px',
+    letterSpacing: '0.02em',
+    margin: '26px 7px 0px 0px',
+  },
+  typoRefresh: {
+    color: theme.palette.primary.main,
+  },
+  rotate: {
+    color: theme.palette.primary.main,
+    '-webkit-animation': '$spin 2s linear infinite',
+    '-moz-animation': '$spin 2s linear infinite',
+    animation: '$spin 2s linear infinite',
+  },
+  replayIcon: {
+    fontSize: 17,
+    '-moz-transform': 'scale(-1, 1)',
+    '-webkit-transform': 'scale(-1, 1)',
+    '-o-transform': 'scale(-1, 1)',
+    '-ms-transform': 'scale(-1, 1)',
+    transform: 'scale(-1, 1)',
+  },
+}));
 export default styles;

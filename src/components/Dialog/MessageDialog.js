@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Dialog as MuiDialog,
+  Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
   Button,
 } from '@material-ui/core';
-import styles from './styles';
+import { styles } from './styles';
 
-const Dialog = (props) => {
+const MessageDialog = (props) => {
   const {
     open,
     handleClose,
@@ -23,7 +23,7 @@ const Dialog = (props) => {
   } = props;
   const classes = styles();
   return (
-    <MuiDialog
+    <Dialog
       onClose={handleClose}
       aria-labelledby="dialog-title"
       open={open}
@@ -42,33 +42,36 @@ const Dialog = (props) => {
         <Button onClick={firstButtonAction} variant="contained" color="primary">
           {firstButtonLabel}
         </Button>
-        {secondButtonLabel !== '' && (
-          <Button
-            onClick={secondButtonAction}
-            variant="contained"
-            color="default"
-          >
-            {secondButtonLabel}
-          </Button>
-        )}
+        {typeof secondButtonLabel !== 'boolean' &&
+          typeof secondButtonAction !== 'boolean' && (
+            <Button
+              onClick={secondButtonAction}
+              variant="contained"
+              color="default"
+            >
+              {secondButtonLabel}
+            </Button>
+          )}
       </DialogActions>
-    </MuiDialog>
+    </Dialog>
   );
 };
 
-export default Dialog;
+export default MessageDialog;
 
-Dialog.propTypes = {
+MessageDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-  firstButtonLabel: PropTypes.string.isRequired,
-  firstButtonAction: PropTypes.func.isRequired,
-  secondButtonLabel: PropTypes.string,
-  secondButtonAction: PropTypes.func,
+  firstButtonLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  firstButtonAction: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  secondButtonLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  secondButtonAction: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
 };
-Dialog.defaultProps = {
-  secondButtonAction: () => {},
-  secondButtonLabel: '',
+MessageDialog.defaultProps = {
+  firstButtonAction: false,
+  firstButtonLabel: false,
+  secondButtonAction: false,
+  secondButtonLabel: false,
 };
