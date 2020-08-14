@@ -11,6 +11,7 @@ const NoData = () => {
       justifyContent="center"
       alignItems="center"
       flexGrow={1}
+      p={6}
     >
       <Typography variant="h1" className={classes.title} align="center">
         No counters yet

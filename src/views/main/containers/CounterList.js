@@ -14,27 +14,18 @@ import DataList from '../components/DataList';
 import CreateDialog from '../../../components/Dialog/CreateDialog';
 import ListHeader from '../components/ListHeader';
 import MessageDialog from '../../../components/Dialog/MessageDialog';
-
-const INIT_STATE = {
-  data: [],
-  isFetching: false,
-  selected: [],
-};
-const INIT_DIALOG_STATE = {
-  dialog: false,
-  title: '',
-  message: '',
-  firstButtonLabel: false,
-  firstButtonAction: false,
-  secondButtonLabel: false,
-  secondButtonAction: false,
-};
+import {
+  INIT_COUNTERLIST_DIALOG_STATE,
+  INIT_COUNTERLIST_STATE,
+} from '../../../constants';
 
 const CounterList = () => {
   const classes = counterListStyles();
-  const [state, setState] = useState(INIT_STATE);
+  const [state, setState] = useState(INIT_COUNTERLIST_STATE);
   const [input, setInput] = useState('');
-  const [errorDialogState, setErrorDialogState] = useState(INIT_DIALOG_STATE);
+  const [errorDialogState, setErrorDialogState] = useState(
+    INIT_COUNTERLIST_DIALOG_STATE
+  );
   const [createDialogState, setCreateDialogState] = useState(false);
 
   const handleCloseDialog = () =>
@@ -87,18 +78,25 @@ const CounterList = () => {
     setState({ data: response, isFetching: false, selected: [] });
   };
   const handleSaveCounters = async (body) => {
-    const response = await onPostCounterSave(body);
-    if (response.status !== 200) {
-      setErrorDialogState({
-        dialog: true,
-        title: "Couldn't create counter",
-        message: 'The internet connection appears to be offline.',
-        firstButtonLabel: 'Dismiss',
-        firstButtonAction: handleCloseDialog,
-        secondButtonLabel: false,
-        secondButtonAction: false,
-      });
+    const findCounter = state.data.find(
+      (counter) => counter.title === body.title
+    );
+    if (findCounter === undefined) {
+      const response = await onPostCounterSave(body);
+      if (response.status !== 200) {
+        setErrorDialogState({
+          dialog: true,
+          title: "Couldn't create counter",
+          message: 'The internet connection appears to be offline.',
+          firstButtonLabel: 'Dismiss',
+          firstButtonAction: handleCloseDialog,
+          secondButtonLabel: false,
+          secondButtonAction: false,
+        });
+      }
+      return response;
     }
+    const response = await handleIncCounter(findCounter.id);
     return response;
   };
   const handleRefresh = async () => {
@@ -112,6 +110,10 @@ const CounterList = () => {
     }));
   };
   const handleOpenCreateDialog = () => setCreateDialogState(true);
+  const handleCloseCreateDialog = () => {
+    setCreateDialogState(false);
+    handleRefresh();
+  };
   useEffect(() => {
     handleGetCounters();
   }, []);
@@ -130,7 +132,9 @@ const CounterList = () => {
           <PageLoader />
         ) : (
           <>
-            <ListHeader state={state} refresh={handleRefresh} />
+            {state.data.length !== 0 && (
+              <ListHeader state={state} refresh={handleRefresh} />
+            )}
             <DataList
               state={state}
               refresh={handleRefresh}
@@ -149,7 +153,7 @@ const CounterList = () => {
       />
       <CreateDialog
         open={createDialogState}
-        onClose={() => setCreateDialogState(false)}
+        onClose={handleCloseCreateDialog}
         onSave={handleSaveCounters}
       />
       <MessageDialog

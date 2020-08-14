@@ -56,4 +56,11 @@ export const createDialogStyle = makeStyles(() => ({
   inputContainer: {
     marginTop: 21,
   },
+  exampleOverflow: {
+    padding: 0,
+  },
+  exampleTitle: {
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
 }));

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const styles = makeStyles((theme) => ({
+export const styles = makeStyles((theme) => ({
   symbols: {},
   symbolsPrimary: {
     color: theme.palette.primary.main,
@@ -35,4 +35,19 @@ const styles = makeStyles((theme) => ({
     borderRadius: 6,
   },
 }));
-export default styles;
+export const badgePickerStyles = makeStyles(() => ({
+  title: {
+    fontWeight: 500,
+    fontSize: 17,
+    lineHeight: '23px',
+    color: '#000',
+    marginTop: 22,
+    marginBottom: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  chips: {
+    margin: 8,
+    flex: '0 0 auto',
+  },
+}));

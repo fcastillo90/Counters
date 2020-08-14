@@ -10,8 +10,11 @@ import Typography from '@material-ui/core/Typography';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Slide from '@material-ui/core/Slide';
 import { Container, Link, useMediaQuery } from '@material-ui/core';
+import clsx from 'clsx';
 import { createDialogStyle } from './styles';
 import { Input } from '../Input';
+import BadgePicker from '../Picker/BadgePicker';
+import { EXAMPLES } from '../../constants/examples';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -21,19 +24,32 @@ const INIT_INPUT = { title: '' };
 const CreateDialog = ({ open, onClose, onSave }) => {
   const fullScreen = useMediaQuery('(max-width:600px)');
   const [input, setInput] = useState(INIT_INPUT);
+  const [exampleState, setExampleState] = useState(false);
   const classes = createDialogStyle();
   const handleWrite = (title) => {
     setInput({ title });
   };
   const handleClose = () => {
-    onClose(false);
-    setInput(INIT_INPUT);
+    if (!exampleState) {
+      onClose(false);
+      setInput(INIT_INPUT);
+    } else {
+      setExampleState(false);
+    }
   };
   const handleSave = async () => {
     const response = await onSave(input);
     if (response.status === 200) {
       onClose(false);
       setInput(INIT_INPUT);
+    }
+  };
+  const handleSelectExample = async (title) => {
+    const response = await onSave({ title });
+    if (response.status === 200) {
+      onClose(false);
+      setInput(INIT_INPUT);
+      setExampleState(false);
     }
   };
   return (
@@ -55,33 +71,69 @@ const CreateDialog = ({ open, onClose, onSave }) => {
             >
               <CancelIcon className={classes.closeIcon} />
             </IconButton>
-            <Typography className={classes.title}>Create counter</Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSave}
-              disabled={input.title === ''}
-            >
-              Save
-            </Button>
+            {exampleState ? (
+              <Typography className={classes.title}>Examples</Typography>
+            ) : (
+              <>
+                <Typography className={classes.title}>
+                  Create counter
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSave}
+                  disabled={input.title === ''}
+                >
+                  Save
+                </Button>
+              </>
+            )}
           </Toolbar>
         </AppBar>
         <Divider />
-        <Container className={classes.inputContainer}>
-          <Typography variant="body1" className={classes.inputTitle}>
-            Name
-          </Typography>
-          <Input
-            placeholder="Cups of coffee"
-            value={input.title}
-            setValue={handleWrite}
-          />
-          <Typography variant="caption" className={classes.inputCaption}>
-            Give it a name. Creative block?{' '}
-            <Link color="inherit" underline="always">
-              See examples.
-            </Link>
-          </Typography>
+        <Container
+          className={clsx(classes.inputContainer, {
+            [classes.exampleOverflow]: exampleState,
+          })}
+        >
+          {!exampleState ? (
+            <>
+              <Typography variant="body1" className={classes.inputTitle}>
+                Name
+              </Typography>
+              <Input
+                placeholder="Cups of coffee"
+                value={input.title}
+                setValue={handleWrite}
+              />
+              <Typography variant="caption" className={classes.inputCaption}>
+                Give it a name. Creative block?{' '}
+                <Link
+                  color="inherit"
+                  underline="always"
+                  onClick={() => setExampleState(true)}
+                >
+                  See examples.
+                </Link>
+              </Typography>
+            </>
+          ) : (
+            <>
+              <div className={classes.exampleTitle}>
+                <Typography variant="caption" className={classes.inputCaption}>
+                  Select an example to add it to your counters.
+                </Typography>
+              </div>
+              {EXAMPLES.map((example) => (
+                <BadgePicker
+                  key={example.label}
+                  label={example.label}
+                  data={example.data}
+                  onSelect={handleSelectExample}
+                />
+              ))}
+            </>
+          )}
         </Container>
       </Dialog>
     </>

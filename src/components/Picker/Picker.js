@@ -4,7 +4,7 @@ import { Box, Typography, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import clsx from 'clsx';
-import styles from './styles';
+import { styles } from './styles';
 
 const Picker = (props) => {
   const { label, number, color, active, onSelect, onRemove, onAdd } = props;
