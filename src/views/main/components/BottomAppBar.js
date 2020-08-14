@@ -6,7 +6,7 @@ import { footerAppBarStyles } from '../styles';
 import { Trash, Share } from '../../../components/Icon';
 
 const BottomAppBar = (props) => {
-  const { onAdd, hasSelection, onDelete, onShare } = props;
+  const { onAdd, selected, onDelete, onShare } = props;
   const classes = footerAppBarStyles();
   return (
     <AppBar
@@ -18,13 +18,13 @@ const BottomAppBar = (props) => {
       <>
         <Divider variant="middle" />
         <Toolbar className={classes.toolbar}>
-          {hasSelection !== 0 && (
+          {selected.length !== 0 && (
             <>
               <Button
                 size="small"
                 color="default"
                 variant="contained"
-                onClick={onDelete}
+                onClick={() => onDelete(selected)}
                 className={classes.deleteButton}
               >
                 <Trash />
@@ -58,7 +58,7 @@ export default BottomAppBar;
 
 BottomAppBar.propTypes = {
   onAdd: PropTypes.func.isRequired,
-  hasSelection: PropTypes.number.isRequired,
+  selected: PropTypes.arrayOf(PropTypes.string).isRequired,
   onDelete: PropTypes.func.isRequired,
   onShare: PropTypes.func.isRequired,
 };

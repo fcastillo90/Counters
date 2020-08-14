@@ -9,6 +9,7 @@ import {
   onPostCounterSave,
   onPostIncCounter,
   onPostDecCounter,
+  onDeleteCounter,
 } from '../model';
 import DataList from '../components/DataList';
 import CreateDialog from '../../../components/Dialog/CreateDialog';
@@ -42,7 +43,7 @@ const CounterList = () => {
     const { title, count } = state.data.find((counter) => counter.id === id);
     setErrorDialogState({
       dialog: true,
-      title: `Couldn't update counter "${title}" to ${count + 1}`,
+      title: `Couldn't update "${title}" to ${count + 1}`,
       message: 'The internet connection appears to be offline.',
       firstButtonLabel: 'Retry',
       firstButtonAction: () => handleIncCounter(id),
@@ -75,7 +76,11 @@ const CounterList = () => {
   const handleGetCounters = async () => {
     setState((oldData) => ({ ...oldData, isFetching: true }));
     const response = await onGetCounterList();
-    setState({ data: response, isFetching: false, selected: [] });
+    setState({
+      data: response.status !== 200 ? [] : response.data,
+      isFetching: false,
+      selected: [],
+    });
   };
   const handleSaveCounters = async (body) => {
     const findCounter = state.data.find(
@@ -101,7 +106,8 @@ const CounterList = () => {
   };
   const handleRefresh = async () => {
     const response = await onGetCounterList();
-    setState({ data: response, isFetching: false, selected: [] });
+    if (response.status === 200)
+      setState({ data: response.data, isFetching: false, selected: [] });
   };
   const handleSelectCounter = (selected) => {
     setState((oldState) => ({
@@ -114,12 +120,46 @@ const CounterList = () => {
     setCreateDialogState(false);
     handleRefresh();
   };
+  const handleDeleteSingleCounter = async (id) => {
+    const response = await onDeleteCounter({ id });
+    return { ...response, id };
+  };
+  const handleDeleteArrayOfCounters = async (arrayToDelete) => {
+    const promises = arrayToDelete.map(async (id) => {
+      const response = await handleDeleteSingleCounter(id);
+      return response;
+    });
+    const resolved = await Promise.all(promises);
+    const withError = resolved.filter(
+      (deleteApiResponse) => deleteApiResponse.status !== 200
+    );
+    if (withError.length !== 0) {
+      let title = '';
+      if (withError.length === 1) {
+        title = `Couldn't delete ${
+          state.data.find((counter) => counter.id === withError[0].id).title
+        }`;
+      } else {
+        title = `Couldn't delete ${withError.length} counters`;
+      }
+      const arrayToRetry = withError.map((counter) => counter.id);
+      setErrorDialogState({
+        dialog: true,
+        title,
+        message: 'The internet connection appears to be offline.',
+        firstButtonLabel: 'Retry',
+        firstButtonAction: () => handleDeleteArrayOfCounters(arrayToRetry),
+        secondButtonLabel: 'Dismiss',
+        secondButtonAction: handleCloseDialog,
+      });
+    } else if (errorDialogState.dialog === true) {
+      setErrorDialogState(INIT_COUNTERLIST_DIALOG_STATE);
+    }
+    handleRefresh();
+  };
   useEffect(() => {
     handleGetCounters();
   }, []);
-  useEffect(() => {
-    console.log({ state });
-  }, [state]);
   return (
     <>
       <Container maxWidth="sm" className={classes.root}>
@@ -146,9 +186,9 @@ const CounterList = () => {
         )}
       </Container>
       <BottomAppBar
-        hasSelection={state.selected.length}
+        selected={state.selected}
         onAdd={handleOpenCreateDialog}
-        onDelete={() => {}}
+        onDelete={handleDeleteArrayOfCounters}
         onShare={() => {}}
       />
       <CreateDialog

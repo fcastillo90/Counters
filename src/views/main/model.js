@@ -1,4 +1,4 @@
-import { getFromApi, postToApi } from '../../services';
+import { getFromApi, postToApi, deleteFromApi } from '../../services';
 import settings from '../../services/settings';
 import { onSuccess, onError, onPending } from '../../services/common';
 
@@ -35,6 +35,14 @@ export const onPostDecCounter = (body) =>
       settings.urls.apiUrl,
       settings.path.decrementCounter
     ),
+    onSuccess,
+    onError,
+    onPending,
+  });
+export const onDeleteCounter = (body) =>
+  deleteFromApi({
+    body,
+    url: settings.buildUrl(settings.urls.apiUrl, settings.path.deleteCounter),
     onSuccess,
     onError,
     onPending,

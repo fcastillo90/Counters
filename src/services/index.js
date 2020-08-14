@@ -27,9 +27,9 @@ export const getFromApi = ({
     .then((response) => {
       const { status, data } = response;
       if (status >= 200 || status < 300) {
-        return onSuccess(data);
+        return onSuccess({ data, status });
       }
-      return onError({ status, data });
+      return onError({ data, status });
     })
     .catch((error) =>
       onError({
@@ -71,5 +71,45 @@ export const postToApi = ({
       }
       return onError({ data, status });
     })
-    .catch((error) => onError({ data: error.response, status: 500 }));
+    .catch((error) =>
+      onError({ data: error.response, status: error.response?.status || 400 })
+    );
+};
+export const deleteFromApi = ({
+  body = {},
+  url = null,
+  onSuccess = null,
+  onError = () => {},
+  onPending = () => {},
+  type = '',
+}) => {
+  if (
+    url == null ||
+    url === '' ||
+    onSuccess == null ||
+    typeof onSuccess !== 'function'
+  ) {
+    throw new Error("url and onSuccess can't be null or empty");
+  }
+  onPending();
+  const config = {};
+  config.data = body;
+  switch (type) {
+    default:
+      config.headers = {
+        'Content-Type': 'application/json',
+      };
+  }
+  return axios
+    .delete(url, config)
+    .then((response) => {
+      const { status, data } = response;
+      if (response.statusText) {
+        return onSuccess({ data, status });
+      }
+      return onError({ data, status });
+    })
+    .catch((error) =>
+      onError({ data: error.response, status: error.response?.status || 400 })
+    );
 };
