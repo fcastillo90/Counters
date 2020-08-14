@@ -21,13 +21,14 @@ const styles = makeStyles((theme) => ({
     letterSpacing: '0.02em',
   },
   mainBox: {
-    height: 53,
-    margin: 0,
+    margin: 10,
     padding: 0,
   },
   typoBox: {
-    padding: '22px 0px',
-    marginLeft: 24,
+    padding: '15px 4px 14px 15px',
+  },
+  innerBox: {
+    flexFlow: 'nowrap',
   },
   mainBoxActive: {
     background: `${theme.palette.primary.main}33`,

@@ -18,6 +18,7 @@ import MessageDialog from '../../../components/Dialog/MessageDialog';
 const INIT_STATE = {
   data: [],
   isFetching: false,
+  selected: [],
 };
 const INIT_DIALOG_STATE = {
   dialog: false,
@@ -40,38 +41,50 @@ const CounterList = () => {
     setErrorDialogState((oldState) => ({ ...oldState, dialog: false }));
   const handleIncCounter = async (id) => {
     const response = await onPostIncCounter({ id });
-    if (response.status !== 200) {
-      const { title, count } = state.data.find((counter) => counter.id === id);
-      setErrorDialogState({
-        dialog: true,
-        title: `Couldn't update counter "${title}" to ${count + 1}`,
-        message: 'The internet connection appears to be offline.',
-        firstButtonLabel: 'Retry',
-        firstButtonAction: () => handleIncCounter(id),
-        secondButtonLabel: 'Dismiss',
-        secondButtonAction: handleCloseDialog,
-      });
+    if (response.status === 200) {
+      const data = [...state.data];
+      const index = data.findIndex((counter) => counter.id === id);
+      data[index].count += 1;
+      setState((oldState) => ({ ...oldState, data }));
+      return response;
     }
+    const { title, count } = state.data.find((counter) => counter.id === id);
+    setErrorDialogState({
+      dialog: true,
+      title: `Couldn't update counter "${title}" to ${count + 1}`,
+      message: 'The internet connection appears to be offline.',
+      firstButtonLabel: 'Retry',
+      firstButtonAction: () => handleIncCounter(id),
+      secondButtonLabel: 'Dismiss',
+      secondButtonAction: handleCloseDialog,
+    });
+    return response;
   };
   const handleDecCounter = async (id) => {
     const response = await onPostDecCounter({ id });
-    if (response.status !== 200) {
-      const { title, count } = state.data.find((counter) => counter.id === id);
-      setErrorDialogState({
-        dialog: true,
-        title: `Couldn't update "${title}" to ${count - 1}`,
-        message: 'The internet connection appears to be offline.',
-        firstButtonLabel: 'Retry',
-        firstButtonAction: () => handleDecCounter(id),
-        secondButtonLabel: 'Dismiss',
-        secondButtonAction: handleCloseDialog,
-      });
+    if (response.status === 200) {
+      const data = [...state.data];
+      const index = data.findIndex((counter) => counter.id === id);
+      data[index].count -= 1;
+      setState((oldState) => ({ ...oldState, data }));
+      return response;
     }
+    const { title, count } = state.data.find((counter) => counter.id === id);
+    setErrorDialogState({
+      dialog: true,
+      title: `Couldn't update "${title}" to ${count - 1}`,
+      message: 'The internet connection appears to be offline.',
+      firstButtonLabel: 'Retry',
+      firstButtonAction: () => handleDecCounter(id),
+      secondButtonLabel: 'Dismiss',
+      secondButtonAction: handleCloseDialog,
+    });
+    return response;
   };
   const handleGetCounters = async () => {
     setState((oldData) => ({ ...oldData, isFetching: true }));
     const response = await onGetCounterList();
-    setState({ data: response, isFetching: false });
+    setState({ data: response, isFetching: false, selected: [] });
   };
   const handleSaveCounters = async (body) => {
     const response = await onPostCounterSave(body);
@@ -90,7 +103,13 @@ const CounterList = () => {
   };
   const handleRefresh = async () => {
     const response = await onGetCounterList();
-    setState({ data: response, isFetching: false });
+    setState({ data: response, isFetching: false, selected: [] });
+  };
+  const handleSelectCounter = (selected) => {
+    setState((oldState) => ({
+      ...oldState,
+      selected,
+    }));
   };
   const handleOpenCreateDialog = () => setCreateDialogState(true);
   useEffect(() => {
@@ -117,11 +136,17 @@ const CounterList = () => {
               refresh={handleRefresh}
               onIncrement={handleIncCounter}
               onDecrement={handleDecCounter}
+              onSelect={handleSelectCounter}
             />
           </>
         )}
       </Container>
-      <BottomAppBar onAdd={handleOpenCreateDialog} />
+      <BottomAppBar
+        hasSelection={state.selected.length}
+        onAdd={handleOpenCreateDialog}
+        onDelete={() => {}}
+        onShare={() => {}}
+      />
       <CreateDialog
         open={createDialogState}
         onClose={() => setCreateDialogState(false)}

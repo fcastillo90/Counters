@@ -46,6 +46,17 @@ export const footerAppBarStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
+  deleteButton: {
+    fontSize: 24,
+    width: 71,
+    height: 41,
+    marginRight: 18,
+  },
+  shareButton: {
+    fontSize: 24,
+    width: 71,
+    height: 41,
+  },
 }));
 export const listStyles = makeStyles((theme) => ({
   '@keyframes spin': {
@@ -55,7 +66,6 @@ export const listStyles = makeStyles((theme) => ({
   },
   typoItems: {
     fontWeight: 600,
-    color: '#4a4a4a',
     fontSize: 17,
     lineHeight: '23px',
     letterSpacing: '0.02em',
@@ -85,6 +95,9 @@ export const listStyles = makeStyles((theme) => ({
     '-o-transform': 'scale(-1, 1)',
     '-ms-transform': 'scale(-1, 1)',
     transform: 'scale(-1, 1)',
+  },
+  replayButton: {
+    verticalAlign: 'sub',
   },
 }));
 export default styles;

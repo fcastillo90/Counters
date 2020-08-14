@@ -6,8 +6,17 @@ import { NoData } from '../../../components/Message';
 import { Picker } from '../../../components/Picker';
 
 const DataList = (props) => {
-  const { state, onIncrement, onDecrement } = props;
+  const { state, onIncrement, onDecrement, onSelect } = props;
   const classes = listStyles();
+  const handleSelection = (id, currentState) => {
+    let selected = [];
+    if (!currentState) {
+      selected = [...state.selected, id];
+    } else {
+      selected = state.selected.filter((counterId) => counterId !== id);
+    }
+    onSelect(selected);
+  };
   return (
     <>
       {state.data.length === 0 ? (
@@ -25,6 +34,10 @@ const DataList = (props) => {
               onAdd={() => {
                 onIncrement(counter.id);
               }}
+              onSelect={(currentState) => {
+                handleSelection(counter.id, currentState);
+              }}
+              active={Boolean(state.selected.find((id) => id === counter.id))}
             />
           ))}
         </Container>
@@ -44,8 +57,10 @@ DataList.propTypes = {
       })
     ),
     isFetching: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    selected: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 DataList.defaultProps = {};

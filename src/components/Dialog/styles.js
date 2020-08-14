@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const styles = makeStyles(() => ({
+export const styles = makeStyles((theme) => ({
   dialogTitle: {
     padding: '19px 27px 6px 27px',
     textAlign: 'center',
@@ -15,6 +15,9 @@ export const styles = makeStyles(() => ({
     fontSize: 17,
     color: '#4A4A4A',
     marginBottom: 0,
+  },
+  secondButton: {
+    color: theme.palette.primary.main,
   },
 }));
 

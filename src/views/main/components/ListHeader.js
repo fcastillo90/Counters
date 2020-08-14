@@ -23,23 +23,38 @@ const ListHeader = (props) => {
   };
   return (
     <div>
-      <Typography
-        display="inline"
-        variant="subtitle1"
-        className={classes.typoItems}
-      >
-        {state.data.length} items
-      </Typography>
-      <Typography
-        display="inline"
-        variant="subtitle2"
-        className={classes.typoTimes}
-      >
-        {getTotalCount(state.data)} times
-      </Typography>
+      {state.selected.length !== 0 ? (
+        <Typography
+          display="inline"
+          color="primary"
+          variant="subtitle1"
+          className={classes.typoItems}
+        >
+          {state.selected.length} selected
+        </Typography>
+      ) : (
+        <>
+          <Typography
+            display="inline"
+            variant="subtitle1"
+            className={classes.typoItems}
+          >
+            {state.data.length} items
+          </Typography>
+          <Typography
+            display="inline"
+            variant="subtitle2"
+            className={classes.typoTimes}
+          >
+            {getTotalCount(state.data)} times
+          </Typography>
+        </>
+      )}
       <IconButton
         edge="start"
-        className={clsx({ [classes.rotate]: refreshState })}
+        className={clsx(classes.replayButton, {
+          [classes.rotate]: refreshState,
+        })}
         onClick={handleRefresh}
       >
         <ReplayIcon className={classes.replayIcon} />
@@ -69,6 +84,7 @@ ListHeader.propTypes = {
       })
     ),
     isFetching: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    selected: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   refresh: PropTypes.func.isRequired,
 };

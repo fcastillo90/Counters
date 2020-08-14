@@ -17,7 +17,11 @@ const Picker = (props) => {
       alignItems="center"
       className={clsx(classes.mainBox, { [classes.mainBoxActive]: active })}
     >
-      <Box className={classes.typoBox} onClick={onSelect} flexGrow={1}>
+      <Box
+        className={classes.typoBox}
+        onClick={() => onSelect(active)}
+        flexGrow={1}
+      >
         <Typography variant="body1" className={classes.labelStyle}>
           {label}
         </Typography>

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Button, Divider } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { footerAppBarStyles } from '../styles';
+import { Trash, Share } from '../../../components/Icon';
 
 const BottomAppBar = (props) => {
-  const { onAdd } = props;
+  const { onAdd, hasSelection, onDelete, onShare } = props;
   const classes = footerAppBarStyles();
   return (
     <AppBar
@@ -17,6 +18,28 @@ const BottomAppBar = (props) => {
       <>
         <Divider variant="middle" />
         <Toolbar className={classes.toolbar}>
+          {hasSelection !== 0 && (
+            <>
+              <Button
+                size="small"
+                color="default"
+                variant="contained"
+                onClick={onDelete}
+                className={classes.deleteButton}
+              >
+                <Trash />
+              </Button>
+              <Button
+                size="small"
+                color="default"
+                variant="contained"
+                onClick={onShare}
+                className={classes.shareButton}
+              >
+                <Share />
+              </Button>
+            </>
+          )}
           <div className={classes.grow} />
           <Button
             size="small"
@@ -35,5 +58,8 @@ export default BottomAppBar;
 
 BottomAppBar.propTypes = {
   onAdd: PropTypes.func.isRequired,
+  hasSelection: PropTypes.number.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onShare: PropTypes.func.isRequired,
 };
 BottomAppBar.defaultProps = {};

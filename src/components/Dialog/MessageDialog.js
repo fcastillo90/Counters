@@ -48,6 +48,7 @@ const MessageDialog = (props) => {
               onClick={secondButtonAction}
               variant="contained"
               color="default"
+              className={classes.secondButton}
             >
               {secondButtonLabel}
             </Button>
