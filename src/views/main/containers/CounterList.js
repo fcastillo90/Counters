@@ -157,6 +157,28 @@ const CounterList = () => {
     }
     handleRefresh();
   };
+  const handleConfirmDelete = (arrayToDelete) => {
+    let title = '';
+    if (arrayToDelete.length === 1) {
+      title = `Delete the ${
+        state.data.find((counter) => counter.id === arrayToDelete[0]).title
+      } counter?`;
+    } else {
+      title = `Delete ${arrayToDelete.length} counters?`;
+    }
+    setErrorDialogState({
+      dialog: true,
+      title,
+      message: 'This cannot be undone',
+      firstButtonLabel: 'Cancel',
+      firstButtonAction: handleCloseDialog,
+      secondButtonLabel: 'Delete',
+      secondButtonAction: () => {
+        handleCloseDialog();
+        handleDeleteArrayOfCounters(arrayToDelete);
+      },
+    });
+  };
   useEffect(() => {
     handleGetCounters();
   }, []);
@@ -188,7 +210,7 @@ const CounterList = () => {
       <BottomAppBar
         selected={state.selected}
         onAdd={handleOpenCreateDialog}
-        onDelete={handleDeleteArrayOfCounters}
+        onDelete={handleConfirmDelete}
         onShare={() => {}}
       />
       <CreateDialog
