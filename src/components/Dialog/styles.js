@@ -21,7 +21,7 @@ export const styles = makeStyles((theme) => ({
   },
 }));
 
-export const createDialogStyle = makeStyles(() => ({
+export const createDialogStyle = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
   },
@@ -35,6 +35,9 @@ export const createDialogStyle = makeStyles(() => ({
     top: '15px !important',
     '& .MuiPaper-root': {
       borderRadius: '16px 16px 0px 0px',
+      [theme.breakpoints.up('sm')]: {
+        borderRadius: 16,
+      },
     },
   },
   closeIcon: {
@@ -55,6 +58,10 @@ export const createDialogStyle = makeStyles(() => ({
   },
   inputContainer: {
     marginTop: 21,
+    [theme.breakpoints.up('sm')]: {
+      marginBottom: 21,
+      minHeight: '50vh',
+    },
   },
   exampleOverflow: {
     padding: 0,
@@ -67,5 +74,9 @@ export const createDialogStyle = makeStyles(() => ({
     height: '100%',
     display: 'flex',
     alignItems: 'flex-end',
+    [theme.breakpoints.up('sm')]: {
+      alignItems: 'flex-start',
+      marginTop: '25%',
+    },
   },
 }));

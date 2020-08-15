@@ -20,39 +20,38 @@ import { PageLoader } from '../Loader';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const INIT_INPUT = { title: '' };
 
 const CreateDialog = ({ open, onClose, onSave }) => {
   const fullScreen = useMediaQuery('(max-width:600px)');
-  const [input, setInput] = useState(INIT_INPUT);
+  const [input, setInput] = useState('');
   const [working, setWorking] = useState(false);
   const [exampleState, setExampleState] = useState(false);
   const classes = createDialogStyle();
   const handleWrite = (title) => {
-    setInput({ title });
+    setInput(title);
   };
   const handleClose = () => {
     if (!exampleState) {
       onClose(false);
-      setInput(INIT_INPUT);
+      setInput('');
     } else {
       setExampleState(false);
     }
   };
   const handleSave = async () => {
     setWorking(true);
-    const response = await onSave(input);
+    const response = await onSave({ title: input });
     setWorking(false);
     if (response.status === 200) {
       onClose(false);
-      setInput(INIT_INPUT);
+      setInput('');
     }
   };
   const handleSelectExample = async (title) => {
     const response = await onSave({ title });
     if (response.status === 200) {
       onClose(false);
-      setInput(INIT_INPUT);
+      setInput('');
       setExampleState(false);
     }
   };
@@ -64,6 +63,8 @@ const CreateDialog = ({ open, onClose, onSave }) => {
         onClose={handleClose}
         TransitionComponent={Transition}
         className={classes.dialogRoot}
+        maxWidth="sm"
+        fullWidth
       >
         <AppBar elevation={0} color="transparent" className={classes.appBar}>
           <Toolbar>
@@ -86,7 +87,7 @@ const CreateDialog = ({ open, onClose, onSave }) => {
                   variant="contained"
                   color="primary"
                   onClick={handleSave}
-                  disabled={input.title === '' || working}
+                  disabled={input === '' || working}
                 >
                   Save
                 </Button>
@@ -100,14 +101,30 @@ const CreateDialog = ({ open, onClose, onSave }) => {
             [classes.exampleOverflow]: exampleState,
           })}
         >
-          {!exampleState ? (
+          {exampleState ? (
+            <>
+              <div className={classes.exampleTitle}>
+                <Typography variant="caption" className={classes.inputCaption}>
+                  Select an example to add it to your counters.
+                </Typography>
+              </div>
+              {EXAMPLES.map((example) => (
+                <BadgePicker
+                  key={example.label}
+                  label={example.label}
+                  data={example.data}
+                  onSelect={handleSelectExample}
+                />
+              ))}
+            </>
+          ) : (
             <>
               <Typography variant="body1" className={classes.inputTitle}>
                 Name
               </Typography>
               <Input
                 placeholder="Cups of coffee"
-                value={input.title}
+                value={input}
                 setValue={handleWrite}
               />
               <Typography variant="caption" className={classes.inputCaption}>
@@ -125,22 +142,6 @@ const CreateDialog = ({ open, onClose, onSave }) => {
                   <PageLoader />
                 </div>
               )}
-            </>
-          ) : (
-            <>
-              <div className={classes.exampleTitle}>
-                <Typography variant="caption" className={classes.inputCaption}>
-                  Select an example to add it to your counters.
-                </Typography>
-              </div>
-              {EXAMPLES.map((example) => (
-                <BadgePicker
-                  key={example.label}
-                  label={example.label}
-                  data={example.data}
-                  onSelect={handleSelectExample}
-                />
-              ))}
             </>
           )}
         </Container>
