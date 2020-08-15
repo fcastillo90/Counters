@@ -2,6 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const styles = makeStyles((theme) => ({
   symbols: {},
+  hide: {
+    display: 'none !important',
+  },
   symbolsPrimary: {
     color: theme.palette.primary.main,
   },

@@ -7,15 +7,27 @@ import clsx from 'clsx';
 import { styles } from './styles';
 
 const Picker = (props) => {
-  const { label, number, color, active, onSelect, onRemove, onAdd } = props;
+  const {
+    label,
+    number,
+    display,
+    color,
+    active,
+    onSelect,
+    onRemove,
+    onAdd,
+  } = props;
   const classes = styles();
   return (
     <Box
       component="div"
-      display="flex"
       justifyContent="space-between"
       alignItems="center"
-      className={clsx(classes.mainBox, { [classes.mainBoxActive]: active })}
+      display="flex"
+      className={clsx(classes.mainBox, {
+        [classes.mainBoxActive]: active,
+        [classes.hide]: display === false,
+      })}
     >
       <Box
         className={classes.typoBox}
@@ -71,9 +83,11 @@ Picker.propTypes = {
   onSelect: PropTypes.func,
   onRemove: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
+  display: PropTypes.bool,
 };
 Picker.defaultProps = {
   color: 'primary',
   active: false,
+  display: true,
   onSelect: () => {},
 };

@@ -14,7 +14,6 @@ import {
 } from '../model';
 import DataList from '../components/DataList';
 import CreateDialog from '../../../components/Dialog/CreateDialog';
-import ListHeader from '../components/ListHeader';
 import MessageDialog from '../../../components/Dialog/MessageDialog';
 import {
   INIT_COUNTERLIST_DIALOG_STATE,
@@ -25,7 +24,6 @@ import { SnackbarAlert } from '../../../components/Alert';
 const CounterList = () => {
   const classes = counterListStyles();
   const [state, setState] = useState(INIT_COUNTERLIST_STATE);
-  const [input, setInput] = useState('');
   const [errorDialogState, setErrorDialogState] = useState(
     INIT_COUNTERLIST_DIALOG_STATE
   );
@@ -190,6 +188,7 @@ const CounterList = () => {
     copy(JSON.stringify(selection));
     setShareSuccessState(true);
   };
+  const handleSearch = (data) => setState({ ...INIT_COUNTERLIST_STATE, data });
   useEffect(() => {
     handleGetCounters();
   }, []);
@@ -198,24 +197,20 @@ const CounterList = () => {
       <Container maxWidth="sm" className={classes.root}>
         <SearchInput
           placeholder="Search Counters"
-          value={input}
-          setValue={setInput}
+          data={state.data}
+          onSearch={handleSearch}
+          onFocus={console.log}
         />
         {state.isFetching ? (
           <PageLoader />
         ) : (
-          <>
-            {state.data.length !== 0 && (
-              <ListHeader state={state} refresh={handleRefresh} />
-            )}
-            <DataList
-              state={state}
-              refresh={handleRefresh}
-              onIncrement={handleIncCounter}
-              onDecrement={handleDecCounter}
-              onSelect={handleSelectCounter}
-            />
-          </>
+          <DataList
+            state={state}
+            onRefresh={handleRefresh}
+            onIncrement={handleIncCounter}
+            onDecrement={handleDecCounter}
+            onSelect={handleSelectCounter}
+          />
         )}
       </Container>
       <BottomAppBar

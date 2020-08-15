@@ -4,9 +4,10 @@ import { Container } from '@material-ui/core';
 import { listStyles } from '../styles';
 import { NoData } from '../../../components/Message';
 import { Picker } from '../../../components/Picker';
+import ListHeader from './ListHeader';
 
 const DataList = (props) => {
-  const { state, onIncrement, onDecrement, onSelect } = props;
+  const { state, onIncrement, onDecrement, onSelect, onRefresh } = props;
   const classes = listStyles();
   const handleSelection = (id, currentState) => {
     let selected = [];
@@ -22,25 +23,29 @@ const DataList = (props) => {
       {state.data.length === 0 ? (
         <NoData />
       ) : (
-        <Container maxWidth="sm" disableGutters className={classes.root}>
-          {state.data.map((counter) => (
-            <Picker
-              key={counter.id}
-              label={counter.title}
-              number={counter.count}
-              onRemove={() => {
-                onDecrement(counter.id);
-              }}
-              onAdd={() => {
-                onIncrement(counter.id);
-              }}
-              onSelect={(currentState) => {
-                handleSelection(counter.id, currentState);
-              }}
-              active={Boolean(state.selected.find((id) => id === counter.id))}
-            />
-          ))}
-        </Container>
+        <>
+          <ListHeader state={state} refresh={onRefresh} />
+          <Container maxWidth="sm" disableGutters className={classes.root}>
+            {state.data.map((counter) => (
+              <Picker
+                key={counter.id}
+                label={counter.title}
+                number={counter.count}
+                display={counter.display}
+                onRemove={() => {
+                  onDecrement(counter.id);
+                }}
+                onAdd={() => {
+                  onIncrement(counter.id);
+                }}
+                onSelect={(currentState) => {
+                  handleSelection(counter.id, currentState);
+                }}
+                active={Boolean(state.selected.find((id) => id === counter.id))}
+              />
+            ))}
+          </Container>
+        </>
       )}
     </>
   );
@@ -61,6 +66,7 @@ DataList.propTypes = {
   }).isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
+  onRefresh: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 DataList.defaultProps = {};

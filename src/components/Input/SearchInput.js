@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { InputAdornment, TextField, Button } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import styles from './styles';
+import { getArrayFiltered } from '../../utils';
 
 const SearchInput = (props) => {
-  const { placeholder, onFocus, value, setValue } = props;
+  const { placeholder, data, onSearch, onFocus } = props;
+  const [value, setValue] = useState('');
   const classes = styles();
-  const handleChangeValue = (e) => {
-    setValue(e.target.value);
+
+  const handleSearch = (e) => {
+    const inputValue = e.target.value;
+    setValue(inputValue);
+    const response = getArrayFiltered({
+      value: inputValue,
+      array: data,
+      key: 'title',
+    });
+    onSearch(response);
   };
   const handleFocus = (e) => {
     onFocus(e);
@@ -24,9 +34,10 @@ const SearchInput = (props) => {
         placeholder={placeholder}
         value={value}
         margin="normal"
-        onFocus={handleFocus}
+        onBlur={() => handleFocus(false)}
+        onFocus={() => handleFocus(true)}
         variant="outlined"
-        onChange={handleChangeValue}
+        onChange={handleSearch}
         InputProps={{
           startAdornment: (
             <>
@@ -54,9 +65,15 @@ export default SearchInput;
 
 SearchInput.propTypes = {
   placeholder: PropTypes.string,
+  onSearch: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
-  value: PropTypes.string.isRequired,
-  setValue: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      count: PropTypes.number,
+      id: PropTypes.string,
+      title: PropTypes.string,
+    })
+  ).isRequired,
 };
 SearchInput.defaultProps = {
   placeholder: '',
