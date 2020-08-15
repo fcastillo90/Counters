@@ -6,7 +6,7 @@ import { CounterProvider } from '../../utils/CounterContext';
 
 const CounterList = lazy(() => import('./containers/CounterList'));
 
-const MainRoutes = () => {
+const CounterRoutes = () => {
   return (
     <CounterProvider>
       <Suspense fallback={<PageLoader />}>
@@ -18,4 +18,4 @@ const MainRoutes = () => {
   );
 };
 
-export default MainRoutes;
+export default CounterRoutes;
