@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container } from '@material-ui/core';
-import { counterListStyles } from '../styles';
 import BottomAppBar from '../components/BottomAppBar';
 import {
   onGetCounterList,
@@ -16,7 +14,6 @@ import { INIT_COUNTERLIST_DIALOG_STATE } from '../../../constants';
 import { CounterContext } from '../../../utils/CounterContext';
 
 const CounterList = () => {
-  const classes = counterListStyles();
   const { state, setState } = useContext(CounterContext);
   const [errorDialogState, setErrorDialogState] = useState(
     INIT_COUNTERLIST_DIALOG_STATE
@@ -172,13 +169,11 @@ const CounterList = () => {
   }, []);
   return (
     <>
-      <Container maxWidth="sm" className={classes.root}>
-        <DataList
-          onRefresh={handleRefresh}
-          onIncrement={handleIncCounter}
-          onDecrement={handleDecCounter}
-        />
-      </Container>
+      <DataList
+        onRefresh={handleRefresh}
+        onIncrement={handleIncCounter}
+        onDecrement={handleDecCounter}
+      />
       <BottomAppBar
         onAdd={handleOpenCreateDialog}
         onDelete={handleConfirmDelete}

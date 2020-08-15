@@ -37,38 +37,38 @@ const DataList = (props) => {
     return (
       <>
         <ListHeader state={state} refresh={onRefresh} />
-        <Container maxWidth="sm" disableGutters className={classes.root}>
-          {state.data.map(({ id, title, count, display }) => (
-            <Picker
-              key={id}
-              label={title}
-              number={count}
-              display={display}
-              onRemove={() => {
-                onDecrement(id);
-              }}
-              onAdd={() => {
-                onIncrement(id);
-              }}
-              onSelect={(currentState) => {
-                handleSelection(id, currentState);
-              }}
-              active={Boolean(state.selected.find((value) => value === id))}
-            />
-          ))}
-        </Container>
+        {state.data.map(({ id, title, count, display }) => (
+          <Picker
+            key={id}
+            label={title}
+            number={count}
+            display={display}
+            onRemove={() => {
+              onDecrement(id);
+            }}
+            onAdd={() => {
+              onIncrement(id);
+            }}
+            onSelect={(currentState) => {
+              handleSelection(id, currentState);
+            }}
+            active={Boolean(state.selected.find((value) => value === id))}
+          />
+        ))}
       </>
     );
   };
   return (
     <>
-      <SearchInput
-        placeholder="Search Counters"
-        data={state.data}
-        onSearch={handleSearch}
-        onFocus={console.log}
-      />
-      <ComponentToRender />
+      <Container maxWidth="sm" className={classes.root}>
+        <SearchInput
+          placeholder="Search Counters"
+          data={state.data}
+          onSearch={handleSearch}
+          onFocus={console.log}
+        />
+        <ComponentToRender />
+      </Container>
     </>
   );
 };

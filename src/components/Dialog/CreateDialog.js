@@ -86,7 +86,7 @@ const CreateDialog = ({ open, onClose, onSave }) => {
                   variant="contained"
                   color="primary"
                   onClick={handleSave}
-                  disabled={input.title === ''}
+                  disabled={input.title === '' || working}
                 >
                   Save
                 </Button>
