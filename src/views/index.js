@@ -9,7 +9,6 @@ import { ThemeProvider, CssBaseline, Box } from '@material-ui/core';
 import theme from '../utils/palette';
 import MainRoutes from './main';
 import WelcomeRoutes from './welcome';
-import { PageLoader } from '../components/Loader';
 import { URL_WELCOME, URL_COUNTERS } from '../constants/routes';
 import { NotFound } from '../components/404';
 
@@ -20,7 +19,6 @@ const App = () => {
         <Router>
           <CssBaseline />
           <Switch>
-            <Route exact path="/loader" component={() => <PageLoader />} />
             <Route
               exact
               path="/"

@@ -17,13 +17,14 @@ const Welcome = () => {
         alignItems="center"
         className={classes.gridContainer}
       >
+        <Grid item />
         <Grid item>
           <Typography variant="h1" className={classes.title} align="center">
             Oops!
           </Typography>
           <Typography variant="body1" className={classes.body} align="center">
             We can&apos;t seem to find the page you&apos;re looking for.
-            Embarrassing
+            Embarrassing...
           </Typography>
         </Grid>
         <Grid item>
