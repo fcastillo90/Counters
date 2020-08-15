@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container } from '@material-ui/core';
-import copy from 'copy-to-clipboard';
 import { counterListStyles } from '../styles';
 import BottomAppBar from '../components/BottomAppBar';
 import {
@@ -13,20 +12,16 @@ import {
 import DataList from '../components/DataList';
 import CreateDialog from '../../../components/Dialog/CreateDialog';
 import MessageDialog from '../../../components/Dialog/MessageDialog';
-import {
-  INIT_COUNTERLIST_DIALOG_STATE,
-  INIT_COUNTERLIST_STATE,
-} from '../../../constants';
-import { SnackbarAlert } from '../../../components/Alert';
+import { INIT_COUNTERLIST_DIALOG_STATE } from '../../../constants';
+import { CounterContext } from '../../../utils/CounterContext';
 
 const CounterList = () => {
   const classes = counterListStyles();
-  const [state, setState] = useState(INIT_COUNTERLIST_STATE);
+  const { state, setState } = useContext(CounterContext);
   const [errorDialogState, setErrorDialogState] = useState(
     INIT_COUNTERLIST_DIALOG_STATE
   );
   const [createDialogState, setCreateDialogState] = useState(false);
-  const [shareSuccessState, setShareSuccessState] = useState(false);
 
   const handleCloseDialog = () =>
     setErrorDialogState((oldState) => ({ ...oldState, dialog: false }));
@@ -172,14 +167,6 @@ const CounterList = () => {
       },
     });
   };
-  const handleShareAction = () => {
-    const selection = state.selected.map((id) => {
-      const counterObject = state.data.find((counter) => counter.id === id);
-      return counterObject;
-    });
-    copy(JSON.stringify(selection));
-    setShareSuccessState(true);
-  };
   useEffect(() => {
     handleGetCounters();
   }, []);
@@ -187,18 +174,14 @@ const CounterList = () => {
     <>
       <Container maxWidth="sm" className={classes.root}>
         <DataList
-          state={state}
-          setState={setState}
           onRefresh={handleRefresh}
           onIncrement={handleIncCounter}
           onDecrement={handleDecCounter}
         />
       </Container>
       <BottomAppBar
-        selected={state.selected}
         onAdd={handleOpenCreateDialog}
         onDelete={handleConfirmDelete}
-        onShare={handleShareAction}
       />
       <CreateDialog
         open={createDialogState}
@@ -214,12 +197,6 @@ const CounterList = () => {
         firstButtonAction={errorDialogState.firstButtonAction}
         secondButtonLabel={errorDialogState.secondButtonLabel}
         secondButtonAction={errorDialogState.secondButtonAction}
-      />
-      <SnackbarAlert
-        open={shareSuccessState}
-        setOpen={setShareSuccessState}
-        title="Copied to clipboard!"
-        colorCase="success"
       />
     </>
   );

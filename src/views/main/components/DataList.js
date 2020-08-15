@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Container } from '@material-ui/core';
 import { listStyles } from '../styles';
@@ -8,9 +8,11 @@ import ListHeader from './ListHeader';
 import { PageLoader } from '../../../components/Loader';
 import { SearchInput } from '../../../components/Input';
 import { INIT_COUNTERLIST_STATE } from '../../../constants';
+import { CounterContext } from '../../../utils/CounterContext';
 
 const DataList = (props) => {
-  const { state, setState, onIncrement, onDecrement, onRefresh } = props;
+  const { onIncrement, onDecrement, onRefresh } = props;
+  const { state, setState } = useContext(CounterContext);
   const classes = listStyles();
   const handleSearch = (data) => setState({ ...INIT_COUNTERLIST_STATE, data });
   const handleSelection = (id, currentState) => {
@@ -73,18 +75,6 @@ const DataList = (props) => {
 export default DataList;
 
 DataList.propTypes = {
-  state: PropTypes.shape({
-    data: PropTypes.arrayOf(
-      PropTypes.shape({
-        count: PropTypes.number,
-        id: PropTypes.string,
-        title: PropTypes.string,
-      })
-    ),
-    isFetching: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    selected: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }).isRequired,
-  setState: PropTypes.func.isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
   onRefresh: PropTypes.func.isRequired,

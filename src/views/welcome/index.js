@@ -1,21 +1,21 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { URL_COUNTERS } from '../../constants/routes';
+import { URL_WELCOME } from '../../constants/routes';
 import { PageLoader } from '../../components/Loader';
 import { CounterProvider } from '../../utils/CounterContext';
 
-const CounterList = lazy(() => import('./containers/CounterList'));
+const Welcome = lazy(() => import('./containers/Welcome'));
 
-const MainRoutes = () => {
+const WelcomeRoutes = () => {
   return (
     <CounterProvider>
       <Suspense fallback={<PageLoader />}>
         <Switch>
-          <Route exact path={URL_COUNTERS} component={CounterList} />
+          <Route exact path={URL_WELCOME} component={Welcome} />
         </Switch>
       </Suspense>
     </CounterProvider>
   );
 };
 
-export default MainRoutes;
+export default WelcomeRoutes;

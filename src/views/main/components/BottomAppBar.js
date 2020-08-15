@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Button, Divider } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import copy from 'copy-to-clipboard';
 import { footerAppBarStyles } from '../styles';
 import { Trash, Share } from '../../../components/Icon';
 import { ShareTooltip } from '../../../components/Tooltip';
+import { SnackbarAlert } from '../../../components/Alert';
+import { CounterContext } from '../../../utils/CounterContext';
 
 const BottomAppBar = (props) => {
-  const { onAdd, selected, onDelete, onShare } = props;
+  const { onAdd, onDelete } = props;
+  const { state } = useContext(CounterContext);
   const classes = footerAppBarStyles();
+  const [shareSuccessState, setShareSuccessState] = useState(false);
   const [tooltipState, setTooltipState] = useState(false);
 
   const handleTooltipClose = () => setTooltipState(false);
   const handleTooltipOpen = () => setTooltipState(true);
+  const handleShareAction = () => {
+    const selection = state.selected.map((id) => {
+      const counterObject = state.data.find((counter) => counter.id === id);
+      return counterObject;
+    });
+    copy(JSON.stringify(selection));
+    setShareSuccessState(true);
+  };
   return (
     <>
       <AppBar
@@ -23,23 +36,23 @@ const BottomAppBar = (props) => {
       >
         <Divider variant="middle" />
         <Toolbar className={classes.toolbar}>
-          {selected.length !== 0 && (
+          {state.selected.length !== 0 && (
             <>
               <Button
                 size="small"
                 color="default"
                 variant="contained"
-                onClick={() => onDelete(selected)}
+                onClick={() => onDelete(state.selected)}
                 className={classes.deleteButton}
               >
                 <Trash />
               </Button>
 
               <ShareTooltip
-                count={selected.length}
+                count={state.selected.length}
                 open={tooltipState}
                 onClose={handleTooltipClose}
-                onShare={onShare}
+                onShare={handleShareAction}
               >
                 <Button
                   size="small"
@@ -64,6 +77,12 @@ const BottomAppBar = (props) => {
           </Button>
         </Toolbar>
       </AppBar>
+      <SnackbarAlert
+        open={shareSuccessState}
+        setOpen={setShareSuccessState}
+        title="Copied to clipboard!"
+        colorCase="success"
+      />
     </>
   );
 };
@@ -71,8 +90,6 @@ export default BottomAppBar;
 
 BottomAppBar.propTypes = {
   onAdd: PropTypes.func.isRequired,
-  selected: PropTypes.arrayOf(PropTypes.string).isRequired,
   onDelete: PropTypes.func.isRequired,
-  onShare: PropTypes.func.isRequired,
 };
 BottomAppBar.defaultProps = {};
