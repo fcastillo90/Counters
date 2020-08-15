@@ -66,7 +66,7 @@ MessageDialog.propTypes = {
   title: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   firstButtonLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  firstButtonAction: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  firstButtonAction: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   secondButtonLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   secondButtonAction: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
 };

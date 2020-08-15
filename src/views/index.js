@@ -16,8 +16,8 @@ const App = () => {
   return (
     <Box height="100vh" display="flex" flexDirection="column">
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Router>
-          <CssBaseline />
           <Switch>
             <Route
               exact
