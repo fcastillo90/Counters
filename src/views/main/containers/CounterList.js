@@ -3,8 +3,6 @@ import { Container } from '@material-ui/core';
 import copy from 'copy-to-clipboard';
 import { counterListStyles } from '../styles';
 import BottomAppBar from '../components/BottomAppBar';
-import { SearchInput } from '../../../components/Input';
-import { PageLoader } from '../../../components/Loader';
 import {
   onGetCounterList,
   onPostCounterSave,
@@ -110,12 +108,6 @@ const CounterList = () => {
     if (response.status === 200)
       setState({ data: response.data, isFetching: false, selected: [] });
   };
-  const handleSelectCounter = (selected) => {
-    setState((oldState) => ({
-      ...oldState,
-      selected,
-    }));
-  };
   const handleOpenCreateDialog = () => setCreateDialogState(true);
   const handleCloseCreateDialog = () => {
     setCreateDialogState(false);
@@ -188,30 +180,19 @@ const CounterList = () => {
     copy(JSON.stringify(selection));
     setShareSuccessState(true);
   };
-  const handleSearch = (data) => setState({ ...INIT_COUNTERLIST_STATE, data });
   useEffect(() => {
     handleGetCounters();
   }, []);
   return (
     <>
       <Container maxWidth="sm" className={classes.root}>
-        <SearchInput
-          placeholder="Search Counters"
-          data={state.data}
-          onSearch={handleSearch}
-          onFocus={console.log}
+        <DataList
+          state={state}
+          setState={setState}
+          onRefresh={handleRefresh}
+          onIncrement={handleIncCounter}
+          onDecrement={handleDecCounter}
         />
-        {state.isFetching ? (
-          <PageLoader />
-        ) : (
-          <DataList
-            state={state}
-            onRefresh={handleRefresh}
-            onIncrement={handleIncCounter}
-            onDecrement={handleDecCounter}
-            onSelect={handleSelectCounter}
-          />
-        )}
       </Container>
       <BottomAppBar
         selected={state.selected}
