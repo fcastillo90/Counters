@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { AppBar, Toolbar, Button, Divider } from '@material-ui/core';
+import { AppBar, Toolbar, Button, Divider, Container } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import copy from 'copy-to-clipboard';
 import { footerAppBarStyles } from '../styles';
@@ -28,61 +28,63 @@ const BottomAppBar = (props) => {
   };
   return (
     <>
-      <AppBar
-        position="relative"
-        color="default"
-        elevation={0}
-        className={classes.appBar}
-      >
-        <Divider variant="middle" />
-        <Toolbar className={classes.toolbar}>
-          {state.selected.length !== 0 && (
-            <>
-              <Button
-                size="small"
-                color="default"
-                variant="contained"
-                onClick={() => onDelete(state.selected)}
-                className={classes.deleteButton}
-              >
-                <Trash />
-              </Button>
-
-              <ShareTooltip
-                count={state.selected.length}
-                open={tooltipState}
-                onClose={handleTooltipClose}
-                onShare={handleShareAction}
-              >
+      <Divider variant="middle" />
+      <Container disableGutters maxWidth="sm">
+        <AppBar
+          position="relative"
+          color="default"
+          elevation={0}
+          className={classes.appBar}
+        >
+          <Toolbar className={classes.toolbar}>
+            {state.selected.length !== 0 && (
+              <>
                 <Button
                   size="small"
                   color="default"
                   variant="contained"
-                  onClick={handleTooltipOpen}
-                  className={classes.shareButton}
+                  onClick={() => onDelete(state.selected)}
+                  className={classes.deleteButton}
                 >
-                  <Share />
+                  <Trash />
                 </Button>
-              </ShareTooltip>
-            </>
-          )}
-          <div className={classes.grow} />
-          <Button
-            size="small"
-            color="primary"
-            variant="contained"
-            onClick={onAdd}
-          >
-            <AddIcon />
-          </Button>
-        </Toolbar>
-      </AppBar>
-      <SnackbarAlert
-        open={shareSuccessState}
-        setOpen={setShareSuccessState}
-        title="Copied to clipboard!"
-        colorCase="success"
-      />
+
+                <ShareTooltip
+                  count={state.selected.length}
+                  open={tooltipState}
+                  onClose={handleTooltipClose}
+                  onShare={handleShareAction}
+                >
+                  <Button
+                    size="small"
+                    color="default"
+                    variant="contained"
+                    onClick={handleTooltipOpen}
+                    className={classes.shareButton}
+                  >
+                    <Share />
+                  </Button>
+                </ShareTooltip>
+              </>
+            )}
+            <div className={classes.grow} />
+            <Button
+              size="small"
+              color="primary"
+              variant="contained"
+              onClick={onAdd}
+            >
+              <AddIcon />
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <SnackbarAlert
+          open={shareSuccessState}
+          setOpen={setShareSuccessState}
+          title="Copied to clipboard!"
+          colorCase="success"
+        />
+      </Container>
     </>
   );
 };
