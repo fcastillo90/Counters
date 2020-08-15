@@ -63,4 +63,9 @@ export const createDialogStyle = makeStyles(() => ({
     paddingLeft: 16,
     paddingRight: 16,
   },
+  loaderContainer: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
 }));

@@ -15,6 +15,7 @@ import { createDialogStyle } from './styles';
 import { Input } from '../Input';
 import BadgePicker from '../Picker/BadgePicker';
 import { EXAMPLES } from '../../constants/examples';
+import { PageLoader } from '../Loader';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -24,6 +25,7 @@ const INIT_INPUT = { title: '' };
 const CreateDialog = ({ open, onClose, onSave }) => {
   const fullScreen = useMediaQuery('(max-width:600px)');
   const [input, setInput] = useState(INIT_INPUT);
+  const [working, setWorking] = useState(false);
   const [exampleState, setExampleState] = useState(false);
   const classes = createDialogStyle();
   const handleWrite = (title) => {
@@ -38,7 +40,9 @@ const CreateDialog = ({ open, onClose, onSave }) => {
     }
   };
   const handleSave = async () => {
+    setWorking(true);
     const response = await onSave(input);
+    setWorking(false);
     if (response.status === 200) {
       onClose(false);
       setInput(INIT_INPUT);
@@ -116,6 +120,11 @@ const CreateDialog = ({ open, onClose, onSave }) => {
                   See examples.
                 </Link>
               </Typography>
+              {working && (
+                <div className={classes.loaderContainer}>
+                  <PageLoader />
+                </div>
+              )}
             </>
           ) : (
             <>

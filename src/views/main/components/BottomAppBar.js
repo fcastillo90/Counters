@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Button, Divider } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { footerAppBarStyles } from '../styles';
 import { Trash, Share } from '../../../components/Icon';
+import { ShareTooltip } from '../../../components/Tooltip';
 
 const BottomAppBar = (props) => {
   const { onAdd, selected, onDelete, onShare } = props;
   const classes = footerAppBarStyles();
+  const [tooltipState, setTooltipState] = useState(false);
+
+  const handleTooltipClose = () => setTooltipState(false);
+  const handleTooltipOpen = () => setTooltipState(true);
   return (
-    <AppBar
-      position="relative"
-      color="default"
-      elevation={0}
-      className={classes.appBar}
-    >
-      <>
+    <>
+      <AppBar
+        position="relative"
+        color="default"
+        elevation={0}
+        className={classes.appBar}
+      >
         <Divider variant="middle" />
         <Toolbar className={classes.toolbar}>
           {selected.length !== 0 && (
@@ -29,15 +34,23 @@ const BottomAppBar = (props) => {
               >
                 <Trash />
               </Button>
-              <Button
-                size="small"
-                color="default"
-                variant="contained"
-                onClick={onShare}
-                className={classes.shareButton}
+
+              <ShareTooltip
+                count={selected.length}
+                open={tooltipState}
+                onClose={handleTooltipClose}
+                onShare={onShare}
               >
-                <Share />
-              </Button>
+                <Button
+                  size="small"
+                  color="default"
+                  variant="contained"
+                  onClick={handleTooltipOpen}
+                  className={classes.shareButton}
+                >
+                  <Share />
+                </Button>
+              </ShareTooltip>
             </>
           )}
           <div className={classes.grow} />
@@ -50,8 +63,8 @@ const BottomAppBar = (props) => {
             <AddIcon />
           </Button>
         </Toolbar>
-      </>
-    </AppBar>
+      </AppBar>
+    </>
   );
 };
 export default BottomAppBar;

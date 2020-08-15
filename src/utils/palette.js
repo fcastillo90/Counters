@@ -111,5 +111,17 @@ export default createMuiTheme({
         },
       },
     },
+    MuiTooltip: {
+      tooltip: {
+        color: '#000',
+        backgroundColor: '#FAFAFA',
+        border: '1px solid rgba(0, 0, 0, 0.1)',
+        boxShadow: '0px 24px 38px rgba(0, 0, 0, 0.14)',
+        borderRadius: 10,
+      },
+      arrow: {
+        color: '#FAFAFA',
+      },
+    },
   },
 });
