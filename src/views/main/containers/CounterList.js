@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
+import copy from 'copy-to-clipboard';
 import { counterListStyles } from '../styles';
 import BottomAppBar from '../components/BottomAppBar';
 import { SearchInput } from '../../../components/Input';
@@ -19,6 +20,7 @@ import {
   INIT_COUNTERLIST_DIALOG_STATE,
   INIT_COUNTERLIST_STATE,
 } from '../../../constants';
+import { SnackbarAlert } from '../../../components/Alert';
 
 const CounterList = () => {
   const classes = counterListStyles();
@@ -28,6 +30,7 @@ const CounterList = () => {
     INIT_COUNTERLIST_DIALOG_STATE
   );
   const [createDialogState, setCreateDialogState] = useState(false);
+  const [shareSuccessState, setShareSuccessState] = useState(false);
 
   const handleCloseDialog = () =>
     setErrorDialogState((oldState) => ({ ...oldState, dialog: false }));
@@ -179,6 +182,14 @@ const CounterList = () => {
       },
     });
   };
+  const handleShareAction = () => {
+    const selection = state.selected.map((id) => {
+      const counterObject = state.data.find((counter) => counter.id === id);
+      return counterObject;
+    });
+    copy(JSON.stringify(selection));
+    setShareSuccessState(true);
+  };
   useEffect(() => {
     handleGetCounters();
   }, []);
@@ -211,7 +222,7 @@ const CounterList = () => {
         selected={state.selected}
         onAdd={handleOpenCreateDialog}
         onDelete={handleConfirmDelete}
-        onShare={() => {}}
+        onShare={handleShareAction}
       />
       <CreateDialog
         open={createDialogState}
@@ -227,6 +238,12 @@ const CounterList = () => {
         firstButtonAction={errorDialogState.firstButtonAction}
         secondButtonLabel={errorDialogState.secondButtonLabel}
         secondButtonAction={errorDialogState.secondButtonAction}
+      />
+      <SnackbarAlert
+        open={shareSuccessState}
+        setOpen={setShareSuccessState}
+        title="Copied to clipboard!"
+        colorCase="success"
       />
     </>
   );

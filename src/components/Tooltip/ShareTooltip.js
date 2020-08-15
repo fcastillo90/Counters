@@ -7,11 +7,15 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
-import { PaperNote } from '../Icon/Note';
+import { PaperNote } from '../Icon';
 import { styles } from './styles';
 
 const ShareTooltip = ({ children, onClose, open, count, onShare }) => {
   const classes = styles();
+  const handleCopy = () => {
+    onShare();
+    onClose();
+  };
   return (
     <ClickAwayListener onClickAway={onClose}>
       <div>
@@ -36,7 +40,7 @@ const ShareTooltip = ({ children, onClose, open, count, onShare }) => {
                   variant="contained"
                   color="default"
                   className={classes.shareButton}
-                  onClick={onShare}
+                  onClick={handleCopy}
                 >
                   Copy
                 </Button>

@@ -123,5 +123,11 @@ export default createMuiTheme({
         color: '#FAFAFA',
       },
     },
+    MuiAlert: {
+      root: {
+        borderRadius: 10,
+        backgroundColor: '#fff',
+      },
+    },
   },
 });
