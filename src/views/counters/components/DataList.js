@@ -8,7 +8,6 @@ import { Picker } from '../../../components/Picker';
 import ListHeader from './ListHeader';
 import { PageLoader } from '../../../components/Loader';
 import { SearchInput } from '../../../components/Input';
-import { INIT_COUNTERLIST_STATE } from '../../../constants';
 import { CounterContext } from '../../../utils/CounterContext';
 
 const DataList = (props) => {
@@ -24,7 +23,7 @@ const DataList = (props) => {
   const classes = listStyles();
   const handleSearch = (data) => {
     if (lightContainer) setLightContainer(false);
-    setState({ ...INIT_COUNTERLIST_STATE, data });
+    setState((oldState) => ({ ...oldState, data }));
   };
   const handleSelection = (id, currentState) => {
     let selected = [];
@@ -75,9 +74,9 @@ const DataList = (props) => {
       </>
     );
   };
-  const handleFocus = () => {
-    if (value === '' && !lightContainer) setLightContainer(true);
-    else if (lightContainer && value !== '') setLightContainer(false);
+  const handleFocus = (focusState) => {
+    if (value === '' && focusState) setLightContainer(true);
+    else if (lightContainer) setLightContainer(false);
   };
   const handleOpenCreateDialog = useCallback(() => {
     if (isDialogCreateDialogOpen && value !== '') setValue('');

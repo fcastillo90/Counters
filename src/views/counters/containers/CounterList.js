@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import BottomAppBar from '../components/BottomAppBar';
 import {
   onGetCounterList,
@@ -19,7 +19,6 @@ const CounterList = () => {
     INIT_COUNTERLIST_DIALOG_STATE
   );
   const [createDialogState, setCreateDialogState] = useState(false);
-
   const handleCloseDialog = () =>
     setErrorDialogState((oldState) => ({ ...oldState, dialog: false }));
   const handleIncCounter = async (id) => {
@@ -63,15 +62,6 @@ const CounterList = () => {
       secondButtonAction: handleCloseDialog,
     });
     return response;
-  };
-  const handleGetCounters = async () => {
-    setState((oldData) => ({ ...oldData, isFetching: true }));
-    const response = await onGetCounterList();
-    setState({
-      data: response.status !== 200 ? [] : response.data,
-      isFetching: false,
-      selected: [],
-    });
   };
   const handleSaveCounters = async (body) => {
     const findCounter = state.data.find(
@@ -164,9 +154,18 @@ const CounterList = () => {
       },
     });
   };
+  const handleInit = useCallback(async () => {
+    setState((oldData) => ({ ...oldData, isFetching: true }));
+    const response = await onGetCounterList();
+    setState({
+      data: response.status !== 200 ? [] : response.data,
+      isFetching: false,
+      selected: [],
+    });
+  }, [setState]);
   useEffect(() => {
-    handleGetCounters();
-  }, []);
+    handleInit();
+  }, [handleInit]);
   return (
     <>
       <DataList
@@ -197,5 +196,4 @@ const CounterList = () => {
     </>
   );
 };
-
 export default CounterList;

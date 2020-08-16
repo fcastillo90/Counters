@@ -27,7 +27,7 @@ const MessageDialog = (props) => {
       onClose={handleClose}
       aria-labelledby="dialog-title"
       open={open}
-      maxWidth="sm"
+      maxWidth="xs"
       fullWidth
     >
       <DialogTitle className={classes.dialogTitle} id="dialog-title">
