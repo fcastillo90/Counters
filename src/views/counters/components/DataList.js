@@ -76,7 +76,11 @@ const DataList = (props) => {
   };
   const handleFocus = (focusState) => {
     if (value === '' && focusState) setLightContainer(true);
-    else if (lightContainer) setLightContainer(false);
+    else if (!focusState) setLightContainer(false);
+  };
+  const handleWriteInput = (e) => {
+    setValue(e);
+    if (e === '') setLightContainer(false);
   };
   const handleOpenCreateDialog = useCallback(() => {
     if (isDialogCreateDialogOpen && value !== '') setValue('');
@@ -98,7 +102,7 @@ const DataList = (props) => {
           onSearch={handleSearch}
           onFocus={handleFocus}
           value={value}
-          setValue={setValue}
+          setValue={handleWriteInput}
         />
         <ComponentToRender />
       </Container>
