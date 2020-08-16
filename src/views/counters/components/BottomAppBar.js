@@ -28,15 +28,15 @@ const BottomAppBar = (props) => {
   };
   return (
     <>
-      <Divider variant="middle" />
-      <Container disableGutters maxWidth="sm">
-        <AppBar
-          position="relative"
-          color="default"
-          elevation={0}
-          className={classes.appBar}
-        >
-          <Toolbar className={classes.toolbar}>
+      <AppBar
+        position="fixed"
+        color="transparent"
+        elevation={0}
+        className={classes.appBar}
+      >
+        <Divider variant="middle" />
+        <Toolbar className={classes.toolbar}>
+          <Container disableGutters maxWidth="sm" className={classes.container}>
             {state.selected.length !== 0 && (
               <>
                 <Button
@@ -76,15 +76,15 @@ const BottomAppBar = (props) => {
             >
               <AddIcon />
             </Button>
-          </Toolbar>
-        </AppBar>
-        <SnackbarAlert
-          open={shareSuccessState}
-          setOpen={setShareSuccessState}
-          title="Copied to clipboard!"
-          colorCase="success"
-        />
-      </Container>
+          </Container>
+        </Toolbar>
+      </AppBar>
+      <SnackbarAlert
+        open={shareSuccessState}
+        setOpen={setShareSuccessState}
+        title="Copied to clipboard!"
+        colorCase="success"
+      />
     </>
   );
 };

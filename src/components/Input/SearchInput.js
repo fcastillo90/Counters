@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputAdornment, TextField, Button } from '@material-ui/core';
+import {
+  InputAdornment,
+  TextField,
+  Button,
+  AppBar,
+  Container,
+} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import styles from './styles';
 import { getArrayFiltered } from '../../utils';
@@ -29,37 +35,39 @@ const SearchInput = (props) => {
     onSearch(response);
   };
   return (
-    <div className={classes.root}>
-      <TextField
-        fullWidth
-        className={classes.textField}
-        placeholder={placeholder}
-        value={value}
-        margin="normal"
-        onBlur={() => onFocus(false)}
-        onFocus={() => onFocus(true)}
-        variant="outlined"
-        onChange={handleSearch}
-        InputProps={{
-          startAdornment: (
-            <>
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            </>
-          ),
-        }}
-      />
-      {!!value && (
-        <Button
-          onClick={handleCancel}
-          variant="contained"
-          className={classes.button}
-        >
-          Cancel
-        </Button>
-      )}
-    </div>
+    <AppBar position="fixed" color="transparent" elevation={0}>
+      <Container maxWidth="sm" disableGutters className={classes.root}>
+        <TextField
+          fullWidth
+          className={classes.textField}
+          placeholder={placeholder}
+          value={value}
+          margin="normal"
+          onBlur={() => onFocus(false)}
+          onFocus={() => onFocus(true)}
+          variant="outlined"
+          onChange={handleSearch}
+          InputProps={{
+            startAdornment: (
+              <>
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              </>
+            ),
+          }}
+        />
+        {!!value && (
+          <Button
+            onClick={handleCancel}
+            variant="contained"
+            className={classes.button}
+          >
+            Cancel
+          </Button>
+        )}
+      </Container>
+    </AppBar>
   );
 };
 

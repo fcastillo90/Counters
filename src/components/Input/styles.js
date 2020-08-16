@@ -19,6 +19,9 @@ const styles = makeStyles(() => ({
       paddingTop: 9,
       paddingBottom: 7,
     },
+    '& .MuiOutlinedInput-adornedStart': {
+      backgroundColor: '#fff',
+    },
     '& .MuiInputAdornment-root': {
       color: '#888B90',
     },

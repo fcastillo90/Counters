@@ -90,20 +90,20 @@ const DataList = (props) => {
   }, [isDialogCreateDialogOpen, handleOpenCreateDialog]);
   return (
     <>
+      <SearchInput
+        placeholder="Search Counters"
+        data={state.data}
+        onSearch={handleSearch}
+        onFocus={handleFocus}
+        value={value}
+        setValue={handleWriteInput}
+      />
       <Container
         maxWidth="sm"
         className={clsx(classes.root, {
           [classes.lightContainer]: lightContainer,
         })}
       >
-        <SearchInput
-          placeholder="Search Counters"
-          data={state.data}
-          onSearch={handleSearch}
-          onFocus={handleFocus}
-          value={value}
-          setValue={handleWriteInput}
-        />
         <ComponentToRender />
       </Container>
     </>

@@ -24,6 +24,9 @@ export const footerAppBarStyles = makeStyles((theme) => ({
     width: 71,
     height: 41,
   },
+  container: {
+    display: 'flex',
+  },
 }));
 export const listStyles = makeStyles((theme) => ({
   '@keyframes spin': {
@@ -32,6 +35,8 @@ export const listStyles = makeStyles((theme) => ({
     },
   },
   root: {
+    marginBottom: 70,
+    marginTop: 82,
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
