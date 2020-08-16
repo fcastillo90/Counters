@@ -25,6 +25,12 @@ const SearchInput = (props) => {
   };
   const handleCancel = () => {
     setValue('');
+    const response = getArrayFiltered({
+      value: '',
+      array: data,
+      key: 'title',
+    });
+    onSearch(response);
   };
   return (
     <div className={classes.root}>
