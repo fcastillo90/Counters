@@ -173,6 +173,7 @@ const CounterList = () => {
         onRefresh={handleRefresh}
         onIncrement={handleIncCounter}
         onDecrement={handleDecCounter}
+        isDialogCreateDialogOpen={createDialogState}
       />
       <BottomAppBar
         onAdd={handleOpenCreateDialog}

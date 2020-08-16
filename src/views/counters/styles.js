@@ -72,4 +72,7 @@ export const listStyles = makeStyles((theme) => ({
   replayButton: {
     verticalAlign: 'sub',
   },
+  lightContainer: {
+    opacity: 0.5,
+  },
 }));
