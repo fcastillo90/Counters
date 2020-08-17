@@ -72,7 +72,7 @@ MessageDialog.propTypes = {
 };
 MessageDialog.defaultProps = {
   firstButtonAction: false,
-  firstButtonLabel: false,
+  firstButtonLabel: 'Oh no!',
   secondButtonAction: false,
   secondButtonLabel: false,
 };

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 import PropTypes from 'prop-types';
 import { INIT_COUNTERLIST_STATE } from '../constants';
 
-export const CounterContext = React.createContext([{}, () => {}]);
+export const CounterContext = createContext([{}, () => {}]);
 
 export const CounterProvider = ({ children }) => {
   const [state, setState] = useState(INIT_COUNTERLIST_STATE);
